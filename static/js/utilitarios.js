@@ -1,15 +1,9 @@
-var count = 0;
-function adicionar(campo){
-    count++;
-    document.getElementById(campo).innerHTML += "<input class='form-control'"
-    + "type='text' placeholder='"+campo+"' style='margin-bottom: 10px; margin-top: 10px' id='"+ campo + count + "' name='"+ campo+"'>";
-}
-
-function remover(campo){
-    if (count == 0 || count == null){
-        return 0
-    }
-    var id = campo+count
-    document.getElementById(id).remove()
-    count--
-}
+$(document).ready(function(){
+  $("#Addobjetivos").click(function(){
+    $("#objetivos").append(
+        "{% for field in objetivos_form.visible_fields %}"+
+          "{{field|add_class:'form-control campodinamico'}}"+
+          "{% endfor %}"
+    )
+  });
+});

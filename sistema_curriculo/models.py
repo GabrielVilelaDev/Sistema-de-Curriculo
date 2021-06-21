@@ -5,7 +5,7 @@ from django.db import models
 class Candidato(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    foto = models.ImageField()
+    foto_candidato = models.ImageField(upload_to='fotos/%d/%m/%Y/', blank=True)
     perfil = models.TextField()
     resumo = models.TextField()
 
@@ -17,19 +17,19 @@ class Candidato(models.Model):
 
 
 class Habilidades(models.Model):
-    descricao = models.TextField()
+    descricaohab = models.CharField(max_length=200)
     candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
     def __str__(self):
         return str(self.id)
 
 class Objetivos(models.Model):
-    descricao = models.TextField()
+    descricaoobj = models.CharField(max_length=200)
     candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
     def __str__(self):
         return str(self.id)
 
 class Formacao(models.Model):
-    descricao = models.TextField()
+    descricaofor = models.CharField(max_length=200)
     candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
     def __str__(self):
         return str(self.id)

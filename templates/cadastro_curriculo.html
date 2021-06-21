@@ -1,5 +1,7 @@
 {% load static %}
-
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
 <!doctype html>
 <html lang="pt-br">
   <head>
@@ -15,7 +17,6 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <!-- Estilos customizados para esse template -->
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
-    <script src="{% static 'js/utilitarios.js' %}"></script>
     <!-- Estilos customizados para esse template -->
   </head>
  <body class="d-flex flex-column h-100">
@@ -39,77 +40,48 @@
       </div>
     </nav>
 
-    <div class="text-center campo-cadastro-main">
+    <div class="text-center container col-sm-6 col-12">
         <form action="{% url 'cadastro_curriculo' %}" method="POST"> {% csrf_token %}
-            <div class="col-12 campo-cadastro-curriculo">
-                <div class="mb-3">
-                  <label for="nome" class="form-label">Nome:</label>
-                  <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome">
+                <div class="col-12 campo-cadastro-curriculo">
+                {% for field in candidato_form.visible_fields %}
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{field|add_class:'form-control'}}
+                {% endfor %}
                 </div>
-                <div class="mb-3">
-                  <label for="foto" class="form-label">Foto:</label>
-                  <input class="form-control" type="file" id="foto" name="foto">
-                </div>
-            </div>
 
-            <div class="col-12 campo-cadastro-curriculo">
-                <div class="mb-3">
-                  <label for="cel" class="form-label">Celular:</label>
-                  <input type="tel" class="form-control" id="cel" placeholder="(xx) xxxxx-xxxx" pattern="[0-9]{3}-[0-9]{5}-[0-9]{4}" name="celular">
+                <div class="col-12 campo-cadastro-curriculo">
+                {% for field in contato_form.visible_fields %}
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{field|add_class:'form-control'}}
+                {% endfor %}
                 </div>
-                <div class="mb-3">
-                  <label for="mail" class="form-label">Email:</label>
-                  <input class="form-control" type="email" placeholder="E-mail" id="mail" name="email">
-                </div>
-                <div class="mb-3">
-                  <label for="linkedin" class="form-label">Linkedin:</label>
-                  <input class="form-control" type="text" placeholder="Linkedin" id="linkedin" name="linkedin">
-                </div>
-                <div class="mb-3">
-                  <label for="site" class="form-label">Site/github:</label>
-                  <input class="form-control" type="text" placeholder="Site"  id="site" name="site">
-                </div>
-            </div>
 
-            <div class="col-12 campo-cadastro-curriculo">
-                <div class="mb-3">
-                  <label for="perfil" class="form-label">Perfil</label>
-                  <textarea class="form-control" id="perfil" rows="3" placeholder="Perfil" name="perfil"></textarea>
+                <div class="col-12 campo-cadastro-curriculo" id="habilidades">
+                {% for field in habilidades_form.visible_fields %}
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <button class="btn"   id="Addhabilidades"><img src="{% static 'images/add.png' %}"></button>
+                    {{field|add_class:'form-control campodinamico'}}
+                {% endfor %}
                 </div>
-            </div>
 
-            <div class="col-12 campo-cadastro-curriculo">
-                <div class="mb-3" id="Habilidades">
-                  <label for="habilidades" class="form-label">Habilidades</label><button class="btn" onclick="adicionar('Habilidades')"><img src="{% static 'images/add.png' %}"></button>
-                    <button class="btn" onclick="removercampo('Habilidades')"><img src="{% static 'images/remove.png' %}"></button>
-                    <input class="form-control" type="text" placeholder="Habilidades" name="Habilidades">
+                <div class="col-12 campo-cadastro-curriculo" id="objetivos">
+                {% for field in objetivos_form.visible_fields %}
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <button class="btn"  id="Addobjetivos"><img src="{% static 'images/add.png' %}"></button>
+                    {{field|add_class:'form-control campodinamico'}}
+                {% endfor %}
                 </div>
-            </div>
 
-            <div class="col-12 campo-cadastro-curriculo">
-                <div class="mb-3" id="Objetivos">
-                  <label for="objetivos" class="form-label">Objetivos</label><button class="btn" onclick="adicionar('Objetivos')"><img src="{% static 'images/add.png' %}"></button>
-                    <button class="btn" onclick="removercampo('Objetivos')"><img src="{% static 'images/remove.png' %}"></button>
-                    <input class="form-control" type="text" placeholder="Objetivos" name="Objetivos">
+                <div class="col-12 campo-cadastro-curriculo" id="formacao">
+                {% for field in formacao_form.visible_fields %}
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <button class="btn"   id="Addformacao"><img src="{% static 'images/add.png' %}"></button>
+                    {{field|add_class:'form-control campodinamico'}}
+                {% endfor %}
                 </div>
-            </div>
-            <div class="col-12 campo-cadastro-curriculo">
-                <div class="mb-3">
-                  <label for="resumo" class="form-label">Resumo Profissional</label>
-                  <textarea class="form-control" id="resumo" rows="3" placeholder="Resumo Profissional" name="resumo"></textarea>
-                </div>
-            </div>
-            <div class="col-12 campo-cadastro-curriculo">
-                <div class="mb-3" id="Formacao">
-                  <label for="academica" class="form-label">Fromação Acadêmica</label><button class="btn" onclick="adicionar('Formacao')"><img src="{% static 'images/add.png' %}"></button>
-                    <button class="btn" onclick="removercampo('Formacao')"><img src="{% static 'images/remove.png' %}"></button>
-                    <input class="form-control" type="text" placeholder="Formacao" name="Formacao">
-                </div>
-            </div>
             <button class="btn btn-cor" type="submit" style="margin-bottom: 10px"> Salvar</button>
         </form>
     </div>
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -118,6 +90,6 @@
         crossorigin="anonymous"></script>
     <script src="{% static 'js/jquery-3.2.1.min.js'%}"></script>
     <script src="{% static 'js/bootstrap.min.js'%}"></script>
-
-  </body>
+    <script src="{% static 'js/utilitarios.js'%}"></script>
+ </body>
 </html>

@@ -17,7 +17,7 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" href="{%static 'css/main.css'%}">
 
-    <title>Página Inicial - Jeff Bezos</title>
+    <title>Página Inicial - {{ candidato.name }}</title>
     
 </head>
 
@@ -37,8 +37,8 @@
         </svg>
     </div>
     <header id="inicio" class="container-fluid">
-        <h1 class="text-uppercase titulo">Jeff Bezos</h1>
-        <img src="{%static 'images/jeffbezosimg.jpg' %}" class="rounded-circle">
+        <h1 class="text-uppercase titulo">{{ candidato.name }}</h1>
+        <img src="{{ candidato.foto.url }}" class="rounded-circle">
 
     </header>
 
@@ -57,7 +57,7 @@
                         <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                     </svg>
 
-                    <span class="span-contato"> (XX) XXXXX-XXXX</span>
+                    <span class="span-contato"> {{ contato.celular }}</span>
 
                 </div>
             </div>
@@ -71,7 +71,7 @@
                         <path
                             d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
                     </svg>
-                    <span class="span-contato"> emge@academico.emge.edu.br</span>
+                    <span class="span-contato"> {{ contato.email }}</span>
                 </div>
             </div>
             <!--ROW EMAIL-->
@@ -85,7 +85,7 @@
                             d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431">
                         </path>
                     </svg>
-                    <span class="span-contato"> linkedin.com/perfil</span>
+                    <span class="span-contato"> l{{ contato.linkedin }}</span>
 
                 </div>
             </div>
@@ -101,7 +101,7 @@
                         <path
                             d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z" />
                     </svg>
-                    <span class="span-contato"> www.site.com.br</span>
+                    <span class="span-contato"> {{ contato.site }}</span>
 
                 </div>
             </div>
@@ -115,13 +115,7 @@
             <div class="row row-campo">
                 <div class="col">
                     <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                        of type and scrambled it to make a type specimen book.
-                    </p>
-                    <p>
-                        It has survived not only five centuries, but also the leap into electronic typesetting,
-                        remaining essentially unchanged.
+                    {{ candidato.perfil }}
                     </p>
                 </div>
             </div>
@@ -131,16 +125,12 @@
         <!--CLASS HABILIDADES-->
         <div class="col-12 offset-sm-2 col-sm-8 campo-info">
             <h3 class="text-center titulo-campo-info">HABILIDADES</h3>
-
             <div class="row row-campo">
+                {% for habilidade in habilidades %}
                 <div class="col">
-
-                    <div class="div-contato"> Comunicativo</div>
-                    <div class="div-contato"> Bilíngue</div>
-                    <div class="div-contato"> SQL Server</div>
-                    <div class="div-contato"> .NET framework</div>
-                    <div class="div-contato"> ASP.NET Core</div>
+                    <div class="div-contato"> {{ habilidade.descricaohab }}</div>
                 </div>
+                {% endfor %}
             </div>
         </div>
         <!--CLASS HABILIDADES-->
@@ -148,23 +138,12 @@
         <!--CLASS OBJETIVOS PROFISSIONAIS-->
         <div class="col-12 offset-sm-2 col-sm-8 campo-info">
             <h3 class="text-center titulo-campo-info">OBJETIVOS PROFISSIONAIS</h3>
-
             <div class="row row-campo">
+                {% for objetivo in objetivos %}
                 <div class="col">
-                    <span class="span-contato"> Pretensão salarial: R$100,000,00</span>
+                    <span class="span-contato">{{ objetivo.descricaoobj }}</span>
                 </div>
-            </div>
-            <div class="row row-campo">
-                <div class="col">
-                    <span class="span-contato"> Cargo: Desenvolvedor </span>
-
-
-                </div>
-            </div>
-            <div class="row row-campo">
-                <div class="col">
-                    <span class="span-contato"> Carga horária: 08hrs/dia</span>
-                </div>
+                {% endfor %}
             </div>
         </div>
         <!--CLASS OBJETIVOS PROFISSIONAIS-->
@@ -175,13 +154,7 @@
             <div class="row row-campo">
                 <div class="col">
                     <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                        of type and scrambled it to make a type specimen book.
-                    </p>
-                    <p>
-                        It has survived not only five centuries, but also the leap into electronic typesetting,
-                        remaining essentially unchanged.
+                        {{ candidato.resumo }}
                     </p>
                 </div>
             </div>
@@ -191,16 +164,13 @@
         <!--CLASS FORMAÇÃO ACADÊMICA-->
         <div class="col-12 offset-sm-2 col-sm-8 campo-info">
             <h3 class="text-center titulo-campo-info"> FORMAÇÃO ACADÊMICA</h3>
-
             <div class="row row-campo">
+                {% for formacoes in formacao %}
                 <div class="col">
-
-                    <div class="div-contato"> Técnico cotemig</div>
-                    <div class="div-contato"> Bacharel em Ciências da Computação</div>
-                    <div class="div-contato"> AWS</div>
-                    <div class="div-contato"> SCRUM</div>
-                    <div class="div-contato"> C# Orientação a Objeto Udemy</div>
+                <div class="div-contato"> {{ formacoes.descricaofor }}</div>
                 </div>
+                {% endfor %}
+
             </div>
         </div>
         <!--CLASS FORMAÇÃO ACADÊMICA-->

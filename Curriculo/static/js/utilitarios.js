@@ -1,15 +1,48 @@
-var count = 0;
-function adicionar(campo){
-    count++;
-    document.getElementById(campo).innerHTML += "<input class='form-control'"
-    + "type='text' placeholder='"+campo+"' style='margin-bottom: 10px; margin-top: 10px' id='"+ campo + count + "' name='"+ campo+"'>";
-}
+//objetivos
+$(document).on('click', 'button#Addobjetivos', function() {
+    $("#objetivos").append(
+      '<div class="objetos-div">'+
+      '<button class="btn" id="Removeobjetivos"><img src="/static/images/remove.png"></button>'+
+      '<input type="text" name="descricao" maxLength="200" class="form-control campodinamico" required=""'+
+      'id="id_descricao">'+
+      "</div>"
+    )
+});
+$(document).on('click', 'button#Removeobjetivos', function() {
+  $(this).closest('div.objetos-div').remove();
+});
+//objetivos
 
-function removercampo(campo){
-    if (count == 0 || count == null){
-        return 0
-    }
-    var id = campo+count
-    document.getElementById(id).remove()
-    count--
-}
+
+
+//habilidades
+$(document).on('click', 'button#Addhabilidades', function() {
+    $("#habilidades").append(
+      '<div class="habilidades-div">'+
+      '<button class="btn" id="Removehabilidades"><img src="/static/images/remove.png"></button>'+
+      '<input type="text" name="descricao" maxLength="200" class="form-control campodinamico" required=""'+
+      'id="id_descricao">'+
+      "</div>"
+    )
+});
+$(document).on('click', 'button#Removehabilidades', function() {
+  $(this).closest('div.habilidades-div').remove();
+});
+//habilidades
+
+
+
+//formacao
+$(document).on('click', 'button#Addformacao', function() {
+    $("#formacao").append(
+      '<div class="formacao-div">'+
+      '<button class="btn" id="Removeformacao"><img src="/static/images/remove.png"></button>'+
+      '<input type="text" name="descricao" maxLength="200" class="form-control campodinamico" required=""'+
+      'id="id_descricao">'+
+      "</div>"
+    )
+});
+$(document).on('click', 'button#Removeformacao', function() {
+  $(this).closest('div.formacao-div').remove();
+});
+//formacao
