@@ -1,0 +1,22 @@
+        nome = request.POST['nome']
+        foto = request.POST.get('foto')
+        celular = request.POST['celular']
+        email = request.POST['email']
+        linkedin = request.POST['linkedin']
+        site = request.POST['site']
+        perfil = request.POST['perfil']
+        habilidades = request.POST['Habilidades']
+        objetivos = request.POST.get('Objetivos')
+        resumo = request.POST['resumo']
+        formacao = request.POST.get('Formacao')
+        user = get_object_or_404(User, pk=request.user.id)
+        candidato_cadastro = Candidato.objects.create(user=user, name=nome, foto_candidato=foto, perfil=perfil, resumo=resumo)
+        candidato_cadastro.save()
+        candidato_contato = Contatos.objects.create(celular=celular, email=email, linkedin=linkedin, site=site, candidato=candidato_cadastro)
+        candidato_contato.save()
+        candidato_objetivos = Objetivos.objects.create(descricao=objetivos, candidato=candidato_cadastro)
+        candidato_objetivos.save()
+        candidato_habilidades = Habilidades.objects.create(descricao=habilidades, candidato=candidato_cadastro)
+        candidato_habilidades.save()
+        candidato_formacao = Formacao.objects.create(descricao=formacao, candidato=candidato_cadastro)
+        candidato_formacao.save()
