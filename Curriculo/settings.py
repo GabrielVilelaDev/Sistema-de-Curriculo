@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sistema_curriculo',
     'widget_tweaks',
-    'crispy_forms'
+    'crispy_forms',
+    'stdimage',
 ]
 
 MIDDLEWARE = [

@@ -11,6 +11,14 @@ from django.forms import modelformset_factory
 
 def dashboard(request):
     if request.user.is_authenticated:
+        return render(request, 'dashboard.html')
+    return redirect('do_login')
+
+def home(request):
+    return render(request, 'home.html')
+
+def candidato(request):
+    if request.user.is_authenticated:
         id = request.user.id
         candidato = Candidato.objects.filter(user=id).get()
         habilidades = Habilidades.objects.all().filter(candidato=candidato)
@@ -25,13 +33,7 @@ def dashboard(request):
             'formacao': formacoes,
         }
         return render(request, 'candidato.html', dados)
-    return render(request, 'dashboard.html')
-
-def home(request):
-    return render(request, 'home.html')
-
-def candidato(request):
-    return render(request, 'candidato.html', dados)
+    return redirect('do_login/')
 
 @csrf_protect
 def do_login(request):
@@ -131,5 +133,45 @@ def cadastro_curriculo(request):
     formacao_form = FormacaoForms()
     contexto = {'candidato_form': candidato_form, 'contato_form': contato_form,'habilidades_form':habilidades_form, 'objetivos_form':objetivos_form, 'formacao_form': formacao_form}
     return render(request, 'cadastro_curriculo.html', contexto)
+
+def recrutador(request):
+    if request.POST:
+        nomedocandidato = request.POST['nome_candidato']
+        candidato = Candidato.objects.filter(name=nomedocandidato).get()
+        habilidades = Habilidades.objects.all().filter(candidato=candidato)
+        objetivos = Objetivos.objects.all().filter(candidato=candidato)
+        contatos = Contatos.objects.filter(candidato=candidato).get()
+        formacoes = Formacao.objects.all().filter(candidato=candidato)
+        dados = {
+            'candidato': candidato,
+            'contato': contatos,
+            'objetivos': objetivos,
+            'habilidades': habilidades,
+            'formacao': formacoes,
+        }
+        return render(request, 'recrutador_candidato.html', dados)
+    candidato = Candidato.objects.order_by('-name')
+    contatos = Contatos.objects.order_by('celular')
+    dados = {
+            'candidato': candidato,
+            'contato': contatos,
+    }
+    return render(request, 'recrutador.html', dados)
+
+def recrutador_candidato(request, nomedocandidato):
+    candidato = Candidato.objects.filter(name=nomedocandidato).get()
+    habilidades = Habilidades.objects.all().filter(candidato=candidato)
+    objetivos = Objetivos.objects.all().filter(candidato=candidato)
+    contatos = Contatos.objects.filter(candidato=candidato).get()
+    formacoes = Formacao.objects.all().filter(candidato=candidato)
+    dados = {
+            'candidato': candidato,
+            'contato': contatos,
+            'objetivos': objetivos,
+            'habilidades': habilidades,
+            'formacao': formacoes,
+    }
+    return render(request, 'candidato.html', dados)
+    return redirect('do_login/')
 
 
